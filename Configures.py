@@ -6,7 +6,7 @@ from typing import List
 class DataParser():
     def __init__(self):
         super().__init__()
-        self.dataset_name = 'bbbp'
+        self.dataset_name = 'mutag'
         self.dataset_dir = './datasets'
         self.task = None
         self.random_split: bool = True
@@ -39,7 +39,7 @@ class ModelParser():
         self.adj_normlize: bool = True                 # the edge_weight normalization for gcn conv
         self.emb_normlize: bool = False                # the l2 normalization after gnn layer
         self.enable_prot = True                        # whether to enable prototype training
-        self.num_prototypes_per_class = 5              # the num_prototypes_per_class
+        self.num_prototypes_per_class = 3              # the num_prototypes_per_class
         self.gat_dropout = 0.6  # dropout in gat layer
         self.gat_heads = 10  # multi-head
         self.gat_hidden = 10  # the hidden units for each head
@@ -84,15 +84,15 @@ class TrainParser():
         self.learning_rate = 0.005
         self.batch_size = 24
         self.weight_decay = 0.0
-        self.max_epochs = 800
-        self.save_epoch = 10
+        self.max_epochs = 100
+        self.save_epoch = 20
         self.early_stopping = 80
         self.last_layer_optimizer_lr = 1e-4            # the learning rate of the last layer
         self.joint_optimizer_lrs = {'features': 1e-4,
                        'add_on_layers': 3e-3,
                        'prototype_vectors': 3e-3}      # the learning rates of the joint training optimizer
         self.warm_epochs = 10                          # the number of warm epochs
-        self.proj_epochs = 100                         # the epoch to start mcts
+        self.proj_epochs = 60                         # the epoch to start mcts
         self.sampling_epochs = 100                     # the epoch to start sampling edges
         self.nearest_graphs = 10                       # number of graphs in projection
 

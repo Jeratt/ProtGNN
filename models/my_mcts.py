@@ -3,6 +3,7 @@ import math
 import torch
 import torch.nn as nn
 import networkx as nx
+import matplotlib.pyplot as plt
 import tqdm
 from torch.utils.data import Dataset, DataLoader
 from Configures import mcts_args
@@ -189,14 +190,17 @@ if __name__ == '__main__':
     plotutils = PlotUtils(dataset_name=data_args.dataset_name)
 
     batch_indices = np.random.choice(data_indices, 64, replace=False)
+
     for i in batch_indices:
         data = dataset[i.item()]
-        for j in range(10):
+        for j in range(6):
             coalition, _, _ = mcts(data, gnnNets, prototype_vectors[j])
             print(coalition)
             graph = to_networkx(data, to_undirected=True)
             plotutils.plot(graph, coalition, x=data.x,
                            figname=os.path.join(save_dir, f"example_{i*10+j}.png"))
+        break
+
     '''
     func = partial(mcts, gnnNet=gnnNets, prototype=prototype_vectors[0])
     pool = Pool(4)
